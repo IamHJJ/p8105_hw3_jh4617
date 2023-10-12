@@ -1,0 +1,18 @@
+---
+title: "p8105_hw3_jh4617"
+author: "Junjie Hu"
+date: "2023-10-12"
+output: github_document
+---
+
+```{r load data echo = FALSE}
+library(p8105.datasets)
+library(tidyverse)
+data("instacart")
+```
+
+```{r}
+instacart
+```
+
+There are `r length(unique(pull(instacart, aisle)))` aisles. The `r mode(pull(instacart, aisle))` aisle is the most items ordered from.
