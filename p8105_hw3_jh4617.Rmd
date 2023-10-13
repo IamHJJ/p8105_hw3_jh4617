@@ -46,4 +46,31 @@ instacart |>
   top_n(3, n_obs)
 ```
 
+```{r}
+instacart |>
+  group_by(product_name, order_dow) |>
+  filter(product_name %in% c("Pink Lady Apples", "Coffee Ice Cream")) |>
+  summarize(mean_order_hour_of_day = mean(order_hour_of_day)) |>
+  mutate(order_dow = recode(order_dow, "0" = "sunday",
+                            "1" = "monday",
+                            "2" = "tuesday",
+                            "3" = "wednesday",
+                            "4" = "thursday",
+                            "5" = "friday",
+                            "6" = "saturday"))|>
+  pivot_wider(
+    names_from = order_dow,
+    values_from = mean_order_hour_of_day
+  )
+```
+
+# problem 2
+
+```{r echo = FALSE}
+library(p8105.datasets)
+data("brfss_smart2010")
+```
+
+
+
 
