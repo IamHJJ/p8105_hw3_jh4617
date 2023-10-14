@@ -211,7 +211,7 @@ total_activity =
 
 ggplot(data = total_activity, aes(x = age, y = sum_min, color = sex)) +
   geom_point(alpha = 0.3) +
-  geom_smooth(se = FALSE) +
+  geom_smooth(aes(group = sex), se = FALSE) +
   facet_grid(.~education)
 ```
 
@@ -219,10 +219,7 @@ Comment
 
 ```{r}
  problem3_join |>
-  pivot_longer(
-    starts_with("min"),
-    names_to = "minute",
-    values_to = "value") |>
+  group_by(education, age, minute) |>
 ggplot(aes(x = minute  , y = value, color = sex)) +
   geom_point(alpha = 0.3) +
   geom_smooth() +
