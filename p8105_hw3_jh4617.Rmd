@@ -85,6 +85,30 @@ problem2 =
 ```
 
 
+2002
+```{r}
+problem2_2002 =
+  problem2 |>
+  group_by(locationabbr) |>
+  filter(year == "2002") |>
+  summarize(n_obs = n() / 2) |>
+  filter(n_obs >= 7)
+print(problem2_2002)
+```
+In 2002, there are 6 states were observed at 7 or more locations. Those states are CT, FL, MA, NC, NJ, PA.
+
+
+2010
+```{r}
+problem2_2010 =
+  problem2 |>
+  group_by(locationabbr) |>
+  filter(year == "2010") |>
+  summarize(n_obs = n() / 2) |>
+  filter(n_obs >= 7)
+print(problem2_2010)
+```
+In 2010, there are 14 states were observed at 7 or more locations. Those states are CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA.
 
 
 
