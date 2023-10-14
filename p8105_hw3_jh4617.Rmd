@@ -151,6 +151,24 @@ The mean data value of individuals responded poor health at NY in 2006
 # Problem 3
 
 ```{r}
+library(tidyverse)
+
+covar = 
+  read.csv("nhanes_covar.csv", skip = 2) |> 
+  janitor::clean_names() |> 
+  magrittr::set_colnames(c("seqn","sex","age","bmi","education")) |>
+  slice(-2) 
+
+accel = 
+  read.csv("nhanes_accel.csv") |> 
+  janitor::clean_names() |> 
+  mutate(seqn = as.character(seqn))
+
+
+problem3_join = 
+  left_join(covar, accel) |> 
+  filter(age > 21) |> 
+  drop_na(seqn | sex | age | bmi | education) 
 
 ```
 
