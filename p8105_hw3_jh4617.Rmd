@@ -227,10 +227,13 @@ In `Less than high school` category, female have a higher total acitivity than m
 
 ```{r}
  problem3_join |>
-  group_by(education, age, minute) |>
+  pivot_longer(
+    starts_with("min"),
+    names_to = "minute",
+    values_to = "value") |>
 ggplot(aes(x = minute  , y = value, color = sex)) +
   geom_point(alpha = 0.3) +
-  geom_smooth() +
+  geom_smooth(aes(group = minute)) +
   facet_grid(.~education)
 ```
 
