@@ -169,12 +169,29 @@ problem3_join =
   left_join(covar, accel) |> 
   filter(age >= 21) |> 
   drop_na(seqn | sex | age | bmi | education) |> 
-  mutate(sex = recode(sex, "1" = "male", "2" = "female"))
+  mutate(sex = recode(sex, "1" = "Male", "2" = "Female")) |>
+  mutate(education = recode(education, "1" = "Less than high school", "2" = "High school equivalent", "3" = "More than high school"))
 
 ```
 
 ```{r}
+problem3_join |>
+  group_by(sex, education) |>
+  summarize(n_obs = n()) |>
+  pivot_wider(
+    names_from = education,
+    values_from = n_obs )
 
+
+problem3_join |>
+  mutate(age = as.numeric(age)) |>
+  ggplot(aes(x = sex, y = age)) +
+  geom_boxplot() +
+  facet_grid(.~education) +
+  labs( x = "Sex", 
+        y = "Age",
+        title = "The age distribution for men and women in each education category")
+  
 ```
 
 
