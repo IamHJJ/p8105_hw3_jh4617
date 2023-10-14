@@ -4,7 +4,7 @@ author: "Junjie Hu"
 date: "2023-10-12"
 output: github_document
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 ```{r load data }
@@ -198,6 +198,38 @@ problem3_join |>
 ```
 
 In `Less than high school` category, the age of female and male are similar. In `High school equivalent` category, the age of female is higher than male's. In `More than high school` category, the age of female is slightly lower than male.
+
+```{r}
+total_activity = 
+  problem3_join |>
+  pivot_longer(
+    starts_with("min"),
+    names_to = "minute",
+    values_to = "value") |>
+  group_by(seqn, age, sex, education) |>
+  summarize(sum_min = sum(value))
+
+ggplot(data = total_activity, aes(x = age, y = sum_min, color = sex)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(se = FALSE) +
+  facet_grid(.~education)
+```
+
+Comment
+
+```{r}
+ problem3_join |>
+  pivot_longer(
+    starts_with("min"),
+    names_to = "minute",
+    values_to = "value") |>
+ggplot(aes(x = minute  , y = value, color = sex)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth() +
+  facet_grid(.~education)
+```
+
+
 
 
 
