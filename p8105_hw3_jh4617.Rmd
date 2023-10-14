@@ -111,7 +111,21 @@ print(problem2_2010)
 In 2010, there are 14 states were observed at 7 or more locations. Those states are CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA.
 
 
+```{r}
+problem2_ggplot = 
+  problem2 |>
+  filter(response == "Excellent") |> 
+  group_by(locationabbr) |>
+  mutate(mean_data_value = mean(data_value, na.rm = TRUE)) |>
+  select(year, locationabbr, mean_data_value)
 
+ggplot(data = problem2_ggplot, aes( x = locationabbr, y = mean_data_value, group = 1)) +
+  geom_point() +
+  geom_line() +
+   labs(x = "Location Abbreviation", 
+        y = "Mean Data Value", 
+        title = "Mean Data Value for Excellent Response by Location")
+```
 
 
 
