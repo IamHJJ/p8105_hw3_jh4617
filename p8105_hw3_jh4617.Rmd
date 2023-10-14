@@ -167,9 +167,15 @@ accel =
 
 problem3_join = 
   left_join(covar, accel) |> 
-  filter(age > 21) |> 
-  drop_na(seqn | sex | age | bmi | education) 
+  filter(age >= 21) |> 
+  drop_na(seqn | sex | age | bmi | education) |> 
+  mutate(sex = recode(sex, "1" = "male", "2" = "female"))
 
 ```
+
+```{r}
+
+```
+
 
 
