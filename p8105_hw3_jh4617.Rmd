@@ -34,8 +34,6 @@ instacart |>
     title = "The number of items ordered in each aisle",
     x = "Aisle",
     y = "Number") 
-
-  mutate(sum_order_number = min_rank(desc(sum_order_number))) |>
 ```
 
 ```{r}
@@ -70,8 +68,6 @@ instacart |>
 library(p8105.datasets)
 data("brfss_smart2010")
 
-brfss_smart2010
-names(brfss_smart2010)
 ```
 
 data cleaning
@@ -80,8 +76,8 @@ problem2 =
   brfss_smart2010 |> 
   janitor::clean_names() |>
   filter(topic == "Overall Health",
-         response %in% c("Excellent", "Poor")) |>
-  mutate(response = factor(response, levels = c("Poor", "Excellent"))) 
+         response %in% c("Excellent", "Very Good", "Good", "Fair", "Poor")) |>
+  mutate(response = factor(response, levels = c("Excellent", "Very Good", "Good", "Fair", "Poor"))) 
 ```
 
 
@@ -91,11 +87,11 @@ problem2_2002 =
   problem2 |>
   group_by(locationabbr) |>
   filter(year == "2002") |>
-  summarize(n_obs = n() / 2) |>
+  summarize(n_obs = n_distinct(locationdesc)) |>
   filter(n_obs >= 7)
 print(problem2_2002)
 ```
-In 2002, there are 6 states were observed at 7 or more locations. Those states are CT, FL, MA, NC, NJ, PA.
+In 2002, there are `r nrow(problem2_2002)` states were observed at 7 or more locations.
 
 
 2010
@@ -104,11 +100,11 @@ problem2_2010 =
   problem2 |>
   group_by(locationabbr) |>
   filter(year == "2010") |>
-  summarize(n_obs = n() / 2) |>
+  summarize(n_obs = n_distinct(locationdesc)) |>
   filter(n_obs >= 7)
 print(problem2_2010)
 ```
-In 2010, there are 14 states were observed at 7 or more locations. Those states are CA, CO, FL, MA, MD, NC, NE, NJ, NY, OH, PA, SC, TX, WA.
+In 2010, there are `r nrow(problem2_2010)` states were observed at 7 or more locations. 
 
 
 ```{r}
@@ -128,7 +124,16 @@ ggplot(data = problem2_ggplot, aes( x = year, y = mean_data_value, group = locat
 The highest mean data value is `r max(pull(problem2_ggplot, mean_data_value))` in `r problem2_ggplot |> filter(mean_data_value == "29.46") |> pull(locationabbr)` when `r problem2_ggplot |> filter(mean_data_value == "29.46") |> pull(year)`. The lowest mean data value is `r min(pull(problem2_ggplot, mean_data_value))` in `r problem2_ggplot |> filter(mean_data_value == "11.5") |> pull(locationabbr)` when `r problem2_ggplot |> filter(mean_data_value == "11.5") |> pull(year)`.
 
 ```{r}
-
+problem2_ggplot2 = 
+  problem2 |>
+  group_by(locationabbr, locationdesc, response) |>
+  filter(locationabbr == "NY" & year %in% c(2006, 2010))
+  
+ggplot(data = problem2_ggplot2, aes(x = response, y = data_value)) +
+  geom_boxplot() +
+  facet_grid(~year) + 
+  labs( y = "Data Value", 
+        title = "The distribution of data value for responses in NY state")
 ```
 
 
