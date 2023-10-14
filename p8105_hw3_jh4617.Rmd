@@ -11,6 +11,11 @@ editor_options:
 library(p8105.datasets)
 library(tidyverse)
 data("instacart")
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+
+
 ```
 
 # Problem 1
@@ -212,10 +217,13 @@ total_activity =
 ggplot(data = total_activity, aes(x = age, y = sum_min, color = sex)) +
   geom_point(alpha = 0.3) +
   geom_smooth(aes(group = sex), se = FALSE) +
-  facet_grid(.~education)
+  facet_grid(.~education) + 
+  labs(
+    x = "Age",
+    y = "Total_Activity") 
 ```
 
-Comment
+In `Less than high school` category, female have a higher total acitivity than male in the early age, however, in the older age, the total activity of male is higher than female. In `High school equivalent` category, except at the very early of the age, the total activity of female is generally higher than male. In `More than high school` category, the total activity of female is always higher than male.
 
 ```{r}
  problem3_join |>
