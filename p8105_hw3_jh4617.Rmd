@@ -13,6 +13,8 @@ library(tidyverse)
 data("instacart")
 ```
 
+# Problem 1
+
 ```{r echo = FALSE}
 instacart
 
@@ -62,7 +64,7 @@ instacart |>
   )
 ```
 
-# problem 2
+# Problem 2
 
 ```{r echo = FALSE}
 library(p8105.datasets)
@@ -142,6 +144,14 @@ ggplot(data = problem2_ggplot2, aes(x = data_value, fill = response)) +
   labs( x = "Data Value", 
         y = "probability",
         title = "The distribution of data value for responses in NY state")
+```
+The mean data value of individuals responded poor health at NY in 2006
+
+
+# Problem 3
+
+```{r}
+
 ```
 
 
