@@ -115,17 +115,20 @@ In 2010, there are 14 states were observed at 7 or more locations. Those states 
 problem2_ggplot = 
   problem2 |>
   filter(response == "Excellent") |> 
-  group_by(locationabbr) |>
-  mutate(mean_data_value = mean(data_value, na.rm = TRUE)) |>
-  select(year, locationabbr, mean_data_value)
+  group_by(locationabbr, year) |>
+  summarize(mean_data_value = mean(data_value, na.rm = TRUE)) 
 
-ggplot(data = problem2_ggplot, aes( x = locationabbr, y = mean_data_value, group = 1)) +
+ggplot(data = problem2_ggplot, aes( x = year, y = mean_data_value, group = locationabbr, color = locationabbr)) +
   geom_point() +
   geom_line() +
-   labs(x = "Location Abbreviation", 
+   labs(x = "Year", 
         y = "Mean Data Value", 
-        title = "Mean Data Value for Excellent Response by Location")
+        title = "Mean Data Value for Excellent Response by Year")
 ```
+The highest mean data value is `r max(pull(problem2_ggplot, mean_data_value))` in `r problem2_ggplot |> filter(mean_data_value == "29.46") |> pull(locationabbr)` when `r problem2_ggplot |> filter(mean_data_value == "29.46") |> pull(year)`. The lowest mean data value is `r min(pull(problem2_ggplot, mean_data_value))` in `r problem2_ggplot |> filter(mean_data_value == "11.5") |> pull(locationabbr)` when `r problem2_ggplot |> filter(mean_data_value == "11.5") |> pull(year)`.
 
+```{r}
+
+```
 
 
