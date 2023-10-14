@@ -77,7 +77,8 @@ problem2 =
   janitor::clean_names() |>
   filter(topic == "Overall Health",
          response %in% c("Excellent", "Very Good", "Good", "Fair", "Poor")) |>
-  mutate(response = factor(response, levels = c("Excellent", "Very Good", "Good", "Fair", "Poor"))) 
+    mutate(response = factor(response, levels = c("Poor", "Fair", "Good", "Very Good", "Excellent")))
+  
 ```
 
 
@@ -127,12 +128,19 @@ The highest mean data value is `r max(pull(problem2_ggplot, mean_data_value))` i
 problem2_ggplot2 = 
   problem2 |>
   group_by(locationabbr, locationdesc, response) |>
-  filter(locationabbr == "NY" & year %in% c(2006, 2010))
+  filter(locationabbr == "NY" & year %in% c(2006, 2010)) 
   
 ggplot(data = problem2_ggplot2, aes(x = response, y = data_value)) +
   geom_boxplot() +
   facet_grid(~year) + 
   labs( y = "Data Value", 
+        title = "The distribution of data value for responses in NY state")
+
+ggplot(data = problem2_ggplot2, aes(x = data_value, fill = response)) +
+  geom_density(alpha = .5) +
+  facet_grid(~year) + 
+  labs( x = "Data Value", 
+        y = "probability",
         title = "The distribution of data value for responses in NY state")
 ```
 
