@@ -273,7 +273,6 @@ ggplot(data = problem3_plot, aes(x = minute  , y = value, color = sex)) +
 
 In `less than high school` category, the activity value of male and female are generally similar among time. In `high school equivalent` category, the activity value of male and female is similar before 500 minute and after 1000 minute, however female's activity value is slightly higher than male from 500 to 1000 minute. In `more than high school` category, the activity value of male and female is similar before 500 minute and after 1000 minute, however female's activity value is higher than male from 500 to 1000 minute.
 
-\
 
 
 
