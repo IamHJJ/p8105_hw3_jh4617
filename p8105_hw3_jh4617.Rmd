@@ -25,17 +25,21 @@ names(instacart)
 There are `r length(unique(pull(instacart, aisle)))` aisles. The `r mode(pull(instacart, aisle))` aisle is the most items ordered from.
 
 ```{r plot item}
-instacart |>
-  group_by(aisle) |>
-  summarize(sum_order_number = sum(order_number)) |>
-  filter(sum_order_number > 10000) |>
-  ggplot(aes(x = aisle, y = sum_order_number)) +
-  geom_boxplot() +
+instacart_plot =
+  instacart |>
+  group_by(aisle_id) |>
+  summarize(n_obs = n()) |>
+  filter(n_obs > 10000)
+
+ggplot(data = instacart_plot, aes(x = as.factor(aisle_id), y = n_obs)) +
+  geom_col() +
     labs(
     title = "The number of items ordered in each aisle",
     x = "Aisle",
     y = "Number") 
+
 ```
+The `r instacart_plot|> filter(n_obs == 150609) |> pull(aisle_id)` aisle has the highest number of items ordered, which is equal to `r max(pull(instacart_plot, n_obs))`. The `r instacart_plot|> filter(n_obs == 10575) |> pull(aisle_id)` has the lowest number of items ordered, which is equal to `r min(pull(instacart_plot, n_obs))`. The average number of items ordered is equal to `r mean(pull(instacart_plot, n_obs))`.
 
 ```{r}
 instacart |>
