@@ -206,15 +206,13 @@ problem3_join =
 ```
 
 ```{r}
-problem3_join_table =
-  problem3_join |>
+problem3_join |>
   group_by(sex, education) |>
   summarize(n_obs = n()) |>
   pivot_wider(
     names_from = education,
-    values_from = n_obs )
-knitr:: kable(problem3_join_table)
-
+    values_from = n_obs ) |>
+knitr:: kable()
 
 problem3_join |>
   mutate(age = as.numeric(age)) |>
