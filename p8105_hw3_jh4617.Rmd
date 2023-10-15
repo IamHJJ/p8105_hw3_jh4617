@@ -99,8 +99,7 @@ problem2_2002 =
   filter(n_obs >= 7)
 print(problem2_2002)
 ```
-In 2002, there are `r nrow(problem2_2002)` states were observed at 7 or more locations.
-
+In 2002, there are `r nrow(problem2_2002)` states were observed at 7 or more locations, which are `r problem2_2002$locationabbr`.
 
 2010
 ```{r}
@@ -112,7 +111,7 @@ problem2_2010 =
   filter(n_obs >= 7)
 print(problem2_2010)
 ```
-In 2010, there are `r nrow(problem2_2010)` states were observed at 7 or more locations. 
+In 2010, there are `r nrow(problem2_2010)` states were observed at 7 or more locations, which are `r problem2_2010$locationabbr`.
 
 
 ```{r}
