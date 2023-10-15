@@ -64,7 +64,9 @@ instacart |>
   pivot_wider(
     names_from = order_dow,
     values_from = mean_order_hour_of_day
-  )
+  ) |>
+  knitr:: kable()
+  
 ```
 
 # Problem 2
@@ -204,12 +206,14 @@ problem3_join =
 ```
 
 ```{r}
-problem3_join |>
+problem3_join_table =
+  problem3_join |>
   group_by(sex, education) |>
   summarize(n_obs = n()) |>
   pivot_wider(
     names_from = education,
     values_from = n_obs )
+knitr:: kable(problem3_join_table)
 
 
 problem3_join |>
@@ -221,7 +225,6 @@ problem3_join |>
   labs( x = "Sex", 
         y = "Age",
         title = "The age distribution for men and women in each education category")
-  
 ```
 
 In `Less than high school` category, the age of female and male are similar. In `High school equivalent` category, the age of female is higher than male's. In `More than high school` category, the age of female is slightly lower than male.
