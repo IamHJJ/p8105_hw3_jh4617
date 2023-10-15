@@ -126,7 +126,8 @@ ggplot(data = problem2_ggplot, aes( x = year, y = mean_data_value, group = locat
   geom_line() +
    labs(x = "Year", 
         y = "Mean Data Value", 
-        title = "Mean Data Value for Excellent Response by Year")
+        title = "Mean Data Value for Excellent Response by Year") +
+  theme_minimal()
 ```
 
 The mean data value of states is fluctuating across time. The mean data value across state is quite different too. The highest mean data value is `r max(pull(problem2_ggplot, mean_data_value))` in `r problem2_ggplot |> filter(mean_data_value == "29.46") |> pull(locationabbr)` when `r problem2_ggplot |> filter(mean_data_value == "29.46") |> pull(year)`. The lowest mean data value is `r min(pull(problem2_ggplot, mean_data_value))` in `r problem2_ggplot |> filter(mean_data_value == "11.5") |> pull(locationabbr)` when `r problem2_ggplot |> filter(mean_data_value == "11.5") |> pull(year)`. 
@@ -229,6 +230,7 @@ In `Less than high school` category, the age of female and male are similar. In 
 ```{r}
 total_activity = 
   problem3_join |>
+  mutate(age = as.numeric(age)) |>
   pivot_longer(
     starts_with("min"),
     names_to = "minute",
